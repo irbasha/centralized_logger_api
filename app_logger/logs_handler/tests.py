@@ -55,30 +55,31 @@ class TestLogHandler(TestCase):
 			"message": "Post deletion unsuccessful"
 		}
 
-
 	def test_log_reader_dump_all_logs(self):
 		"""
 		test function - test_log_reader_dump_all_logs
 		tests api function query_all_log_entries and validates the response
 		"""
+		response = client.get(reverse('query_all_log_entries'))
+		print(response)
 		if settings.LOGS_STORAGE_DB:
-			response = client.get(reverse('query_all_log_entries'))
 			alllogs = LogHandlerModel.objects.all()
 			self.raise_assert(alllogs, response)
 		else:
-			pass
+			self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_log_reader_filter_with_context_only(self):
 		"""
 		test function - test_log_reader_filter_with_context_only
 		tests api function query_context_only_logs and validates the response
 		"""
+		response = client.get(reverse('query_context_only_logs', kwargs={'context': 'WhatsApp'}))
+		print(response)
 		if settings.LOGS_STORAGE_DB:
-			response = client.get(reverse('query_context_only_logs', kwargs={'context': 'WhatsApp'}))
 			contextlogs = LogHandlerModel.objects.filter(context__contains='WhatsApp')
 			self.raise_assert(contextlogs, response)
 		else:
-			pass
+			self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_log_reader_filter_with_time_period(self):
 		"""
@@ -86,12 +87,13 @@ class TestLogHandler(TestCase):
 		tests api function query_timeperiod_logs and validates the response
 		raises assertion error on failure
 		"""
+		response = client.get(reverse('query_timeperiod_logs', kwargs={'timestart': '1234567891', 'timestop': '1234567894'}))
+		print(response)
 		if settings.LOGS_STORAGE_DB:
-			response = client.get(reverse('query_timeperiod_logs', kwargs={'timestart': '1234567891', 'timestop': '1234567894'}))
 			timeperiodlogs = LogHandlerModel.objects.filter(timestamp__range=('1234567891', '1234567894'))
 			self.raise_assert(timeperiodlogs, response)
 		else:
-			pass
+			self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_log_reader_filter_with_log_level(self):
 		"""
@@ -99,24 +101,28 @@ class TestLogHandler(TestCase):
 		tests api function query_level_filtered_logs and validates the response
 		raises assertion error on failure
 		"""
+		response = client.get(reverse('query_level_filtered_logs', kwargs={'level': 'WARNING'}))
+		print(response)
+
 		if settings.LOGS_STORAGE_DB:
-			response = client.get(reverse('query_level_filtered_logs', kwargs={'level': 'WARNING'}))
 			contextlogs = LogHandlerModel.objects.filter(level__contains='WARNING')
 			self.raise_assert(contextlogs, response)
 		else:
-			pass
+			self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_log_reader_filter_with_message(self):
 		"""
 		test function - test_log_reader_filter_with_message
 		tests api function query_message_filtered_logs and validates the response
 		"""
+		response = client.get(reverse('query_message_filtered_logs', kwargs={'msg': self.str_enc}))
+		print(response)
+
 		if settings.LOGS_STORAGE_DB:
-			response = client.get(reverse('query_message_filtered_logs', kwargs={'msg': self.str_enc}))
 			messagelogs = LogHandlerModel.objects.filter(message__contains=self.strmsg)
 			self.raise_assert(messagelogs, response)
 		else:
-			pass
+			self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def raise_assert(self, logdata, response):
 		"""
@@ -132,43 +138,37 @@ class TestLogHandler(TestCase):
 		test function - test_log_writer_push_valid_log
 		tests api function push_log_to_storage and validates the response for a valid post data
 		"""
-		if settings.LOGS_STORAGE_DB:
-			response = client.post(
-				reverse('push_log_to_storage'),
-				data = json.dumps(self.valid_message_log),
-				content_type='application/json'
-				)
-			self.assertEqual(response.status_code, status.HTTP_200_OK)
-		else:
-			pass
+		response = client.post(
+			reverse('push_log_to_storage'),
+			data = json.dumps(self.valid_message_log),
+			content_type='application/json'
+			)
+		print(response)
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 	def test_log_writer_push_invalid_log(self):
 		"""
 		test function - test_log_writer_push_invalid_log
 		tests api function push_log_to_storage and validates the response for an invalid post data
 		"""
-		if settings.LOGS_STORAGE_DB:
-			response = client.post(
-				reverse('push_log_to_storage'),
-				data = json.dumps(self.invalid_message_log),
-				content_type='application/json'
-				)
-			self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-		else:
-			pass
+		response = client.post(
+			reverse('push_log_to_storage'),
+			data = json.dumps(self.invalid_message_log),
+			content_type='application/json'
+			)
+		print(response)
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 	def test_log_writer_push_empty_log(self):
 		"""
 		test function - test_log_writer_push_empty_log
 		tests api function push_log_to_storage and validates the response for empty post data
 		"""
-		if settings.LOGS_STORAGE_DB:
-			response = client.post(
-				reverse('push_log_to_storage'),
-				data = json.dumps({}),
-				content_type='application/json'
-				)
-			self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-		else:
-			pass
+		response = client.post(
+			reverse('push_log_to_storage'),
+			data = json.dumps({}),
+			content_type='application/json'
+			)
+		print(response)
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
