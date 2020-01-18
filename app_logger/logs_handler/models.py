@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class LogHandlerModel(models.Model):
+	timestamp = models.TextField()
+	context = models.TextField()
+	level = models.TextField()
+	message = models.TextField()
+
