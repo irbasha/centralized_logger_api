@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 LOGS_STORAGE_DB = False
 LOG_FILE_PATH = os.path.join(BASE_DIR, 'logs')
-LOG_FILE_NAME = os.path.join(LOG_FILE_PATH, 'apilogs.csv')
+LOG_FILE_NAME = os.path.join(LOG_FILE_PATH, 'api_logs.csv')
 
 # Application definition
 
