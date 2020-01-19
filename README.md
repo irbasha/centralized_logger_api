@@ -93,6 +93,6 @@ Destroying test database for alias 'default'...
 This test module has all basic test scenarios including two negative testcases. You can also use Postman tool or execute above mentioned curl commands to test this API.
 
 ### KeyNotes
-- This API uses sqlite as a default database for storing logs. To use MySQL, Change the database backend to MySQL in django settings, and provide database details such as database name, login id and password if any.
+- This API uses sqlite as a default database for storing logs. To use MySQL, Change the database backend to MySQL in django settings, and provide database details such as database name, login id and password if any. MySQL should be installed and setup properly. It also requires mysql client for python to use MySQL database in django. To install it execute command `pip install mysqlclient`.
 - By Default Logs storage type is configured to Database. To use File System, Change the Setting LOGS_STORAGE_DB from True to False in Django Settings. By default it is set to True. On False, Logs will be stored in a CSV File in a logs directory in Project's Base directory.
 - Django test module contains all the basic tests need to check the API's functionality with sample input and output for each test.
