@@ -5,7 +5,7 @@ LOGGER is a Django REST API to Read and Write Logs from different sources in to 
 Supports basic Http operations GET and POST to Read and Write Logs.
 
 ### Installation
-This REST API requires Python 3 and Django 2.11 to run.
+This REST API requires Python 3 and Django 2.1 to run.
 Follow the below steps on a Linux Server to run this API.
 
 ```sh
@@ -14,6 +14,7 @@ $ source env/bin/activate
 $ pip install django==2.1
 $ pip install djangorestframework
 $ git clone https://github.com/irbasha/centralized_logger_api.git
+$ cd centralized_logger_api
 $ cd app_logger
 $ python manage.py makemigraions
 $ python manage.py migrate

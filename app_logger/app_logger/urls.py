@@ -10,5 +10,5 @@ urlpatterns = [
     path('loggerapi/dump/time/<slug:timestart>/<slug:timestop>', views.query_timeperiod_logs, name='query_timeperiod_logs'),
     path('loggerapi/dump/context/<slug:context>', views.query_context_only_logs, name='query_context_only_logs'),
     path('loggerapi/dump/level/<slug:level>', views.query_level_filtered_logs, name='query_level_filtered_logs'),
-    re_path(r'^loggerapi/dump/message/(?P<msg>[-A-Za-z0-9+=]{1,50}|=[^=]|={3,})/$', views.query_message_filtered_logs, name='query_message_filtered_logs'),
+    re_path(r'^loggerapi/dump/message/(?P<msg>[-A-Za-z0-9+=]{1,50}|=[^=]|={3,})$', views.query_message_filtered_logs, name='query_message_filtered_logs'),
 ]
