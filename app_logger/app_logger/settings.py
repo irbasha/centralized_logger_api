@@ -77,6 +77,8 @@ WSGI_APPLICATION = 'app_logger.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# To use MySQL as database backend, comment below lines and uncomment the below commented lines
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -84,6 +86,21 @@ DATABASES = {
     }
 }
 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '', # provide a proper database name, create one if it does not exists
+        'USER': '', # mysql login username
+        'PASSWORD': '', # mysql login password
+        'HOST': '', # mysql host server name or ip
+        'PORT': '', # mysql port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
+}
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

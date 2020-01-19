@@ -16,7 +16,6 @@ $ pip install djangorestframework
 $ git clone https://github.com/irbasha/centralized_logger_api.git
 $ cd centralized_logger_api
 $ cd app_logger
-$ python manage.py makemigraions
 $ python manage.py migrate
 ```
 
